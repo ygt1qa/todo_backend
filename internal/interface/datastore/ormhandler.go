@@ -7,4 +7,5 @@ import (
 type OrmHandler interface {
 	Create(models.Tasks) error
 	FindAll() ([]*models.Task, error)
+	Remove(int) error
 }

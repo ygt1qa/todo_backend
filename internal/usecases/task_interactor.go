@@ -18,3 +18,7 @@ func (i *TaskInteractor) Add(t models.Task) error {
 func (i *TaskInteractor) FindAll() ([]*models.Task, error) {
 	return i.TaskRepository.GetAll()
 }
+
+func (i *TaskInteractor) Remove(id int) error {
+	return i.TaskRepository.Erase(id)
+}

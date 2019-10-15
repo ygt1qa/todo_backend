@@ -59,6 +59,15 @@ func (o *OrmHandler) Create(m models.Tasks) error {
 	return nil
 }
 
+// Remove delete task
+func (o *OrmHandler) Remove(id int) error {
+	o.db = InitDB()
+
+	task, _ := FindTask(context.Background(), o.db, int64(id))
+	_, err := task.Delete(context.Background(), o.db)
+	return err
+}
+
 // FindAll get all tasks
 func (o *OrmHandler) FindAll() ([]*models.Task, error) {
 	o.db = InitDB()

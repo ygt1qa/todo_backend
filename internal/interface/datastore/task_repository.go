@@ -20,3 +20,8 @@ func (t *TaskRepository) GetAll() ([]*models.Task, error) {
 	result, err := t.FindAll()
 	return result, err
 }
+
+func (t *TaskRepository) Erase(id int) error {
+	err := t.Remove(id)
+	return err
+}

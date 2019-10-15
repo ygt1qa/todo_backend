@@ -1,6 +1,8 @@
 package adapter
 
 import (
+	"strconv"
+
 	"github.com/ygt1qa/todo_backend/internal/domains/models"
 	"github.com/ygt1qa/todo_backend/internal/interface/datastore"
 	"github.com/ygt1qa/todo_backend/internal/usecases"
@@ -34,6 +36,7 @@ func (adapter *TaskAdapter) Create(c Context) {
 	c.JSON(200, "success")
 }
 
+// FetchAll get all tasks
 func (adapter *TaskAdapter) FetchAll(c Context) {
 	result, err := adapter.Interactor.FindAll()
 	if err != nil {
@@ -41,4 +44,15 @@ func (adapter *TaskAdapter) FetchAll(c Context) {
 		return
 	}
 	c.JSON(200, result)
+}
+
+// Delete delete task
+func (adapter *TaskAdapter) Delete(c Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+	err := adapter.Interactor.Remove(id)
+	if err != nil {
+		c.JSON(500, NewError(err))
+		return
+	}
+	c.JSON(200, "success")
 }

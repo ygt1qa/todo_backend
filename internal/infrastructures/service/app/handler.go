@@ -20,7 +20,7 @@ func Handler(r *gin.Engine) {
 		v1.POST("/tasks", func(c *gin.Context) { taskAdapter.Create(c) })
 		v1.GET("/tasks", func(c *gin.Context) { taskAdapter.FetchAll(c) })
 		v1.GET("/tasks/:id")
-		v1.DELETE("/tasks/:id")
+		v1.DELETE("/tasks/:id", func(c *gin.Context) { taskAdapter.Delete(c) })
 		v1.PUT("/tasks/:id")
 	}
 }
