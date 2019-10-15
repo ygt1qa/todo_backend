@@ -33,3 +33,12 @@ func (adapter *TaskAdapter) Create(c Context) {
 	}
 	c.JSON(200, "success")
 }
+
+func (adapter *TaskAdapter) FetchAll(c Context) {
+	result, err := adapter.Interactor.FindAll()
+	if err != nil {
+		c.JSON(500, NewError(err))
+		return
+	}
+	c.JSON(200, result)
+}

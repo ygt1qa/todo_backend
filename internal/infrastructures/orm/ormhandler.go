@@ -6,6 +6,7 @@ import (
 
 	"github.com/volatiletech/null"
 	"github.com/volatiletech/sqlboiler/boil"
+
 	"github.com/ygt1qa/todo_backend/internal/domains/models"
 	"github.com/ygt1qa/todo_backend/internal/interface/datastore"
 
@@ -58,10 +59,31 @@ func (o *OrmHandler) Create(m models.Tasks) error {
 	return nil
 }
 
+// FindAll get all tasks
+func (o *OrmHandler) FindAll() ([]*models.Task, error) {
+	o.db = InitDB()
+	result, err := Tasks().All(context.Background(), o.db)
+
+	var TaskList []*models.Task
+	for _, value := range result {
+		TaskList = append(TaskList, BoilTaskToTask(value))
+	}
+	return TaskList, err
+}
+
 // TaskToBoilTask entity task conversion sql boiler entity
 func TaskToBoilTask(t models.Task) *Task {
 	return &Task{
 		Name:        t.Name,
 		Description: null.StringFrom(t.Description),
+	}
+}
+
+// BoilTaskToTask sql boiler entity conversion entity task
+func BoilTaskToTask(t *Task) *models.Task {
+	return &models.Task{
+		ID:          int(t.ID),
+		Name:        t.Name,
+		Description: t.Description.String,
 	}
 }

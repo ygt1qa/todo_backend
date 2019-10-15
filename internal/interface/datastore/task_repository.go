@@ -14,3 +14,9 @@ func (t *TaskRepository) Store(m models.Tasks) error {
 	err := t.Create(m)
 	return err
 }
+
+// GetAll get all tasks
+func (t *TaskRepository) GetAll() ([]*models.Task, error) {
+	result, err := t.FindAll()
+	return result, err
+}
