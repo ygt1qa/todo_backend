@@ -22,3 +22,7 @@ func (i *TaskInteractor) FindAll() ([]*models.Task, error) {
 func (i *TaskInteractor) Remove(id int) error {
 	return i.TaskRepository.Erase(id)
 }
+
+func (i *TaskInteractor) UpdateById(id int, t models.Task) error {
+	return i.TaskRepository.Update(id, t)
+}

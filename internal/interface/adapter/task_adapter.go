@@ -56,3 +56,16 @@ func (adapter *TaskAdapter) Delete(c Context) {
 	}
 	c.JSON(200, "success")
 }
+
+// Update update task
+func (adapter *TaskAdapter) Update(c Context) {
+	t := models.Task{}
+	c.Bind(&t)
+	id, _ := strconv.Atoi(c.Param("id"))
+	err := adapter.Interactor.UpdateById(id, t)
+	if err != nil {
+		c.JSON(500, NewError(err))
+		return
+	}
+	c.JSON(200, "success")
+}

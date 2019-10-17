@@ -25,3 +25,8 @@ func (t *TaskRepository) Erase(id int) error {
 	err := t.Remove(id)
 	return err
 }
+
+func (t *TaskRepository) Update(id int, task models.Task) error {
+	err := t.UpdateByID(id, task)
+	return err
+}

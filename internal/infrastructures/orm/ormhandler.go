@@ -68,6 +68,20 @@ func (o *OrmHandler) Remove(id int) error {
 	return err
 }
 
+// UpdateByID update task
+func (o *OrmHandler) UpdateByID(id int, t models.Task) error {
+	o.db = InitDB()
+
+	task, _ := FindTask(context.Background(), o.db, int64(id))
+	task.Name = t.Name
+	task.Description = null.StringFrom(t.Description)
+	_, err := task.Update(context.Background(), o.db, boil.Infer())
+	if err != nil {
+		return err
+	}
+	return err
+}
+
 // FindAll get all tasks
 func (o *OrmHandler) FindAll() ([]*models.Task, error) {
 	o.db = InitDB()

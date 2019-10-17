@@ -7,4 +7,5 @@ type TaskRepository interface {
 	Store(models.Tasks) error
 	GetAll() ([]*models.Task, error)
 	Erase(int) error
+	Update(int, models.Task) error
 }
