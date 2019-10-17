@@ -1,6 +1,20 @@
 version: '3'
 
 services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DB_USER: mysql
+      DB_PASSWORD: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: mysql_test
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./internal:/go/src/github.com/ygt1qa/todo_backend/internal
   db:
     image: mysql:latest
     volumes:

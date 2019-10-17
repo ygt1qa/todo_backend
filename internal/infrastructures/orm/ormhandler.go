@@ -25,7 +25,7 @@ type OrmHandler struct {
 func InitDB() boil.ContextExecutor {
 
 	// connect to db
-	db, err := sql.Open("mysql", "mysql:mysql@tcp(127.0.0.1:3306)/mysql_test")
+	db, err := sql.Open("mysql", "mysql:mysql@tcp(db:3306)/mysql_test")
 	if err != nil {
 		panic(err)
 	}
@@ -73,7 +73,7 @@ func (o *OrmHandler) FindAll() ([]*models.Task, error) {
 	o.db = InitDB()
 	result, err := Tasks().All(context.Background(), o.db)
 
-	var TaskList []*models.Task
+	TaskList := []*models.Task{}
 	for _, value := range result {
 		TaskList = append(TaskList, BoilTaskToTask(value))
 	}
