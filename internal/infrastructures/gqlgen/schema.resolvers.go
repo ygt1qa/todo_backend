@@ -5,9 +5,7 @@ package gqlgen
 
 import (
 	"context"
-	"fmt"
 
-	"github.com/gin-gonic/gin"
 	"github.com/ygt1qa/todo_backend/internal/domains/models"
 	"github.com/ygt1qa/todo_backend/internal/infrastructures/gqlgen/generated"
 	"github.com/ygt1qa/todo_backend/internal/infrastructures/gqlgen/model"
@@ -47,24 +45,3 @@ func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//    it when you're done.
-//  - You have helper methods in this file. Move them out to keep these resolver files clean.
-func GinContextFromContext(ctx context.Context) (*gin.Context, error) {
-	ginContext := ctx.Value("GinContextKey")
-	if ginContext == nil {
-		err := fmt.Errorf("could not retrieve gin.Context")
-		return nil, err
-	}
-
-	gc, ok := ginContext.(*gin.Context)
-	if !ok {
-		err := fmt.Errorf("gin.Context has wrong type")
-		return nil, err
-	}
-	return gc, nil
-}
