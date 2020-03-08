@@ -20,6 +20,16 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) 
 	return taskAdapter.Create(input)
 }
 
+func (r *mutationResolver) UpdateTodo(ctx context.Context, input model.EditTodo) (*models.Task, error) {
+	taskAdapter := adapter.GqlNewTaskAdapter(orm.NewOrmHandler())
+	return taskAdapter.Update(input)
+}
+
+func (r *mutationResolver) DeleteTodo(ctx context.Context, input int) (*models.Task, error) {
+	taskAdapter := adapter.GqlNewTaskAdapter(orm.NewOrmHandler())
+	return taskAdapter.Delete(input)
+}
+
 func (r *queryResolver) Todos(ctx context.Context) ([]*models.Task, error) {
 	taskAdapter := adapter.GqlNewTaskAdapter(orm.NewOrmHandler())
 	gc, err := GinContextFromContext(ctx)

@@ -7,6 +7,6 @@ import (
 type OrmHandler interface {
 	Create(models.Tasks) (*models.Task, error)
 	FindAll() ([]*models.Task, error)
-	Remove(int) error
-	UpdateByID(int, models.Task) error
+	Remove(int) (*models.Task, error)
+	UpdateByID(int, models.Task) (*models.Task, error)
 }

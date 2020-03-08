@@ -19,10 +19,10 @@ func (i *TaskInteractor) FindAll() ([]*models.Task, error) {
 	return i.TaskRepository.GetAll()
 }
 
-func (i *TaskInteractor) Remove(id int) error {
+func (i *TaskInteractor) Remove(id int) (*models.Task, error) {
 	return i.TaskRepository.Erase(id)
 }
 
-func (i *TaskInteractor) UpdateById(id int, t models.Task) error {
+func (i *TaskInteractor) UpdateById(id int, t models.Task) (*models.Task, error) {
 	return i.TaskRepository.Update(id, t)
 }

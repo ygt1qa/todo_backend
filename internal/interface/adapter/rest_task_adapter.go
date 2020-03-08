@@ -49,12 +49,12 @@ func (adapter *RestTaskAdapter) FetchAll(c Context) {
 // Delete delete task
 func (adapter *RestTaskAdapter) Delete(c Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
-	err := adapter.Interactor.Remove(id)
+	task, err := adapter.Interactor.Remove(id)
 	if err != nil {
 		c.JSON(500, NewError(err))
 		return
 	}
-	c.JSON(200, "success")
+	c.JSON(200, task)
 }
 
 // Update update task
@@ -62,10 +62,10 @@ func (adapter *RestTaskAdapter) Update(c Context) {
 	t := models.Task{}
 	c.Bind(&t)
 	id, _ := strconv.Atoi(c.Param("id"))
-	err := adapter.Interactor.UpdateById(id, t)
+	task, err := adapter.Interactor.UpdateById(id, t)
 	if err != nil {
 		c.JSON(500, NewError(err))
 		return
 	}
-	c.JSON(200, "success")
+	c.JSON(200, task)
 }

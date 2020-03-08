@@ -6,6 +6,6 @@ import "github.com/ygt1qa/todo_backend/internal/domains/models"
 type TaskRepository interface {
 	Store(models.Tasks) (*models.Task, error)
 	GetAll() ([]*models.Task, error)
-	Erase(int) error
-	Update(int, models.Task) error
+	Erase(int) (*models.Task, error)
+	Update(int, models.Task) (*models.Task, error)
 }

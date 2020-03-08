@@ -24,12 +24,20 @@ func (t *TaskRepository) GetAll() ([]*models.Task, error) {
 	return result, err
 }
 
-func (t *TaskRepository) Erase(id int) error {
-	err := t.Remove(id)
-	return err
+// Erase remove task
+func (t *TaskRepository) Erase(id int) (*models.Task, error) {
+	task, err := t.Remove(id)
+	if err != nil {
+		return nil, err
+	}
+	return task, err
 }
 
-func (t *TaskRepository) Update(id int, task models.Task) error {
-	err := t.UpdateByID(id, task)
-	return err
+// Update update task
+func (t *TaskRepository) Update(id int, task models.Task) (*models.Task, error) {
+	updatetask, err := t.UpdateByID(id, task)
+	if err != nil {
+		return nil, err
+	}
+	return updatetask, err
 }

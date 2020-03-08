@@ -60,16 +60,19 @@ func (o *OrmHandler) Create(m models.Tasks) (*models.Task, error) {
 }
 
 // Remove delete task
-func (o *OrmHandler) Remove(id int) error {
+func (o *OrmHandler) Remove(id int) (*models.Task, error) {
 	o.db = InitDB()
 
 	task, _ := FindTask(context.Background(), o.db, int64(id))
 	_, err := task.Delete(context.Background(), o.db)
-	return err
+	if err != nil {
+		return nil, err
+	}
+	return BoilTaskToTask(task), err
 }
 
 // UpdateByID update task
-func (o *OrmHandler) UpdateByID(id int, t models.Task) error {
+func (o *OrmHandler) UpdateByID(id int, t models.Task) (*models.Task, error) {
 	o.db = InitDB()
 
 	task, _ := FindTask(context.Background(), o.db, int64(id))
@@ -77,9 +80,9 @@ func (o *OrmHandler) UpdateByID(id int, t models.Task) error {
 	task.Description = null.StringFrom(t.Description)
 	_, err := task.Update(context.Background(), o.db, boil.Infer())
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return err
+	return BoilTaskToTask(task), err
 }
 
 // FindAll get all tasks
