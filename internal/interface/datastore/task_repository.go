@@ -10,9 +10,12 @@ type TaskRepository struct {
 }
 
 // Store save task
-func (t *TaskRepository) Store(m models.Tasks) error {
-	err := t.Create(m)
-	return err
+func (t *TaskRepository) Store(m models.Tasks) (*models.Task, error) {
+	task, err := t.Create(m)
+	if err != nil {
+		return nil, err
+	}
+	return task, nil
 }
 
 // GetAll get all tasks

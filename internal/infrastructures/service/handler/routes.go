@@ -5,6 +5,8 @@ import (
 
 	"github.com/ygt1qa/todo_backend/internal/infrastructures/service/app"
 
+	"context"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,7 +14,7 @@ import (
 func NewRouter() *gin.Engine {
 	r := gin.New()
 	r.Use(cors())
-
+	r.Use(GinContextToContextMiddleware())
 	app.Handler(r)
 
 	return r
@@ -32,6 +34,15 @@ func cors() gin.HandlerFunc {
 			return
 		}
 
+		c.Next()
+	}
+}
+
+// GinContextToContextMiddleware Accessing gin.Context
+func GinContextToContextMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		ctx := context.WithValue(c.Request.Context(), "GinContextKey", c)
+		c.Request = c.Request.WithContext(ctx)
 		c.Next()
 	}
 }

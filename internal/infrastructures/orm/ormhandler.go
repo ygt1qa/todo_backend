@@ -45,18 +45,18 @@ func NewOrmHandler() datastore.OrmHandler {
 }
 
 // Create stores a one or more todos into DB
-func (o *OrmHandler) Create(m models.Tasks) error {
+func (o *OrmHandler) Create(m models.Tasks) (*models.Task, error) {
 	o.db = InitDB()
 
+	var task *Task
 	// insert for each todo
 	for _, v := range m {
-		var task *Task
 		task = TaskToBoilTask(v)
 		if err := task.Insert(context.Background(), o.db, boil.Infer()); err != nil {
-			return err
+			return nil, err
 		}
 	}
-	return nil
+	return &m[0], nil
 }
 
 // Remove delete task

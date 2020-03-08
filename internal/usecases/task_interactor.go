@@ -10,7 +10,7 @@ type TaskInteractor struct {
 }
 
 // Add save task
-func (i *TaskInteractor) Add(t models.Task) error {
+func (i *TaskInteractor) Add(t models.Task) (*models.Task, error) {
 	return i.TaskRepository.Store([]models.Task{t})
 }
 

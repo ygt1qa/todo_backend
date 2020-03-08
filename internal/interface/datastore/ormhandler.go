@@ -5,7 +5,7 @@ import (
 )
 
 type OrmHandler interface {
-	Create(models.Tasks) error
+	Create(models.Tasks) (*models.Task, error)
 	FindAll() ([]*models.Task, error)
 	Remove(int) error
 	UpdateByID(int, models.Task) error
